@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" style="scroll-padding-top: 100px;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gilded Razor | Premium Barbershop</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* Theme Variables - Classic (Default) */
+        :root {
+            --primary: #D4AF37;
+            --primary-hover: #C5A028;
+            --bg-main: #0f172a;
+            --bg-card: #1a1a1a;
+            --bg-alt: #151f2e;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
+
+        /* Modern Theme */
+        [data-theme="modern"] {
+            --primary: #3B82F6;
+            --primary-hover: #2563EB;
+            --bg-main: #ffffff;
+            --bg-card: #f8fafc;
+            --bg-alt: #f1f5f9;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        /* Vintage Theme */
+        [data-theme="vintage"] {
+            --primary: #8B4513;
+            --primary-hover: #A0522D;
+            --bg-main: #F5F5DC;
+            --bg-card: #FAF0E6;
+            --bg-alt: #FFF8DC;
+            --text-main: #3D2817;
+            --text-muted: #5D4E37;
+            --border: #D2B48C;
+        }
+
+        /* Base Styles */
+        * {
+            transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+        }
+
+        /* Utility Classes using CSS Variables */
+        .bg-theme-main { background-color: var(--bg-main) !important; }
+        .bg-theme-card { background-color: var(--bg-card) !important; }
+        .bg-theme-alt { background-color: var(--bg-alt) !important; }
+        .bg-theme-primary { background-color: var(--primary) !important; }
+        
+        .text-theme-main { color: var(--text-main) !important; }
+        .text-theme-muted { color: var(--text-muted) !important; }
+        .text-theme-primary { color: var(--primary) !important; }
+        
+        .border-theme { border-color: var(--border) !important; }
+        .border-theme-primary { border-color: var(--primary) !important; }
+
+        .hover-bg-theme-primary:hover { background-color: var(--primary-hover) !important; }
+        .hover-text-theme-primary:hover { color: var(--primary) !important; }
+
+        /* Gold Text Gradient */
+        .gold-text-gradient {
+            background: linear-gradient(90deg, var(--primary), #FDE68A, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .fade-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .scale-in.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Service Card Hover */
+        .service-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .service-card:hover::before {
+            left: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        /* Navigation */
+        .nav-scrolled {
+            background-color: var(--bg-card);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Theme Switcher */
+        .theme-switcher {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 100;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .theme-switcher:hover {
+            transform: scale(1.05);
+        }
+
+        .theme-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin: 6px 0;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-btn.active {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        .theme-btn-classic {
+            background: linear-gradient(135deg, #0f172a, #D4AF37);
+            color: #D4AF37;
+        }
+
+        .theme-btn-modern {
+            background: linear-gradient(135deg, #ffffff, #3B82F6);
+            color: #3B82F6;
+        }
+
+        .theme-btn-vintage {
+            background: linear-gradient(135deg, #F5F5DC, #8B4513);
+            color: #8B4513;
+        }
+
+        .theme-label {
+            font-size: 10px;
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Gallery Hover */
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-item img {
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.15) rotate(2deg);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, var(--primary), transparent);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Button Animation */
+        .btn-animated {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn-animated::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .btn-animated:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-animated:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Scroll Progress */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--primary);
+            z-index: 1000;
+            transition: width 0.1s ease;
+        }
+
+        /* Floating Icons */
+        .floating-icon {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-icon:nth-child(2) {
+            animation-delay: 2s;
+        }
+
+        .floating-icon:nth-child(3) {
+            animation-delay: 4s;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-main);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-hover);
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body data-theme="classic">
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress" style="width: 0%"></div>
+
+    <!-- Theme Switcher -->
+    <div class="theme-switcher" id="themeSwitcher">
+        <button class="theme-btn theme-btn-classic active" onclick="setTheme('classic')" title="Classic Dark">
+            <i class="fas fa-moon"></i>
+        </button>
+        <div class="theme-label">Classic</div>
+        
+        <button class="theme-btn theme-btn-modern" onclick="setTheme('modern')" title="Modern Light">
+            <i class="fas fa-sun"></i>
+        </button>
+        <div class="theme-label">Modern</div>
+        
+        <button class="theme-btn theme-btn-vintage" onclick="setTheme('vintage')" title="Vintage">
+            <i class="fas fa-coffee"></i>
+        </button>
+        <div class="theme-label">Vintage</div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-6 border-b border-transparent">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="#" class="text-2xl font-serif font-bold tracking-widest text-theme-main">
+                THE <span class="text-theme-primary">GILDED</span> RAZOR
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#about" class="nav-link text-sm uppercase tracking-widest hover-text-theme-primary transition-colors text-theme-main">About</a>
+                <a href="#services" class="nav-link text-sm uppercase tracking-widest hover-text-theme-primary transition-colors text-theme-main">Services</a>
+                <a href="#gallery" class="nav-link text-sm uppercase tracking-widest hover-text-theme-primary transition-colors text-theme-main">Gallery</a>
+                <a href="#contact" class="nav-link px-6 py-2 border border-theme-primary text-theme-primary hover-bg-theme-primary hover:text-white transition-all duration-300 uppercase text-xs font-bold tracking-widest btn-animated">
+                    Book Appointment
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-theme-main focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-theme-card absolute w-full border-b border-theme">
+            <div class="flex flex-col px-6 py-4 space-y-4">
+                <a href="#about" class="nav-link text-sm uppercase tracking-widest hover-text-theme-primary text-theme-main">About</a>
+                <a href="#services" class="nav-link text-sm uppercase tracking-widest hover-text-theme-primary text-theme-main">Services</a>
+                <a href="#gallery" class="nav-link text-sm uppercase tracking-widest hover-text-theme-primary text-theme-main">Gallery</a>
+                <a href="#contact" class="nav-link text-theme-primary font-bold uppercase text-xs tracking-widest">Book Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative h-screen flex items-center justify-center bg-cover bg-center bg-fixed bg-no-repeat" style="background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.9)), url('https://image.qwenlm.ai/public_source/0a7d5122-f7ba-4c45-bcc1-24b9182b817c/169ca121b-3414-4357-b25b-9902359e75cb.png');">
+        <div class="absolute inset-0" style="background: linear-gradient(to top, var(--bg-main), transparent);"></div>
+        
+        <!-- Floating decorative elements -->
+        <div class="absolute top-20 left-10 floating-icon opacity-20">
+            <i class="fas fa-cut text-6xl text-theme-primary"></i>
+        </div>
+        <div class="absolute bottom-40 right-20 floating-icon opacity-20">
+            <i class="fas fa-scissors text-5xl text-theme-primary"></i>
+        </div>
+        <div class="absolute top-40 right-40 floating-icon opacity-20">
+            <i class="fas fa-gem text-4xl text-theme-primary"></i>
+        </div>
+        
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto fade-in-up">
+            <p class="text-theme-primary uppercase tracking-[0.3em] text-sm mb-4 font-semibold" style="animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;">Est. 1924</p>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-theme-main mb-6 leading-tight gold-text-gradient">
+                Refined Grooming <br> for the Modern Gentleman
+            </h1>
+            <p class="text-theme-muted text-lg md:text-xl mb-10 font-light max-w-2xl mx-auto fade-in-left">
+                Experience the art of traditional barbering in a sanctuary of style. Where heritage meets contemporary precision.
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center scale-in">
+                <a href="#contact" class="nav-link bg-theme-primary text-white px-8 py-4 uppercase tracking-widest font-bold text-sm hover-bg-theme-primary transition-colors duration-300 btn-animated">
+                    Reserve Your Chair
+                </a>
+                <a href="#services" class="nav-link border border-current text-theme-main px-8 py-4 uppercase tracking-widest font-bold text-sm hover-bg-theme-primary hover:text-white transition-colors duration-300 btn-animated">
+                    View Services
+                </a>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2" style="animation: bounce 1s infinite;">
+            <i class="fas fa-chevron-down text-theme-primary text-2xl"></i>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-theme-alt relative overflow-hidden">
+        <!-- Animated background pattern -->
+        <div class="absolute inset-0 opacity-5">
+            <div class="absolute top-0 left-0 w-96 h-96 bg-theme-primary rounded-full filter blur-3xl" style="animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;"></div>
+            <div class="absolute bottom-0 right-0 w-96 h-96 bg-theme-primary rounded-full filter blur-3xl" style="animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite; animation-delay: 2s;"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <div class="lg:w-1/2 fade-in-left">
+                    <div class="relative group">
+                        <div class="absolute -top-4 -left-4 w-full h-full border-2 border-theme-primary z-0 transition-transform duration-500 group-hover:rotate-3"></div>
+                        <div class="absolute -bottom-4 -right-4 w-full h-full border-2 border-theme-primary z-0 transition-transform duration-500 group-hover:-rotate-3"></div>
+                        <img src="https://image.qwenlm.ai/public_source/0a7d5122-f7ba-4c45-bcc1-24b9182b817c/126793e82-d7ed-4fd0-970c-f550a0a7c613.png" alt="Master Barber" class="relative z-10 w-full grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl">
+                    </div>
+                </div>
+                <div class="lg:w-1/2 fade-in-right">
+                    <h3 class="text-theme-primary uppercase tracking-widest text-sm font-bold mb-2">The Master's Chair</h3>
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-theme-main mb-6">A Legacy of Precision</h2>
+                    <p class="text-theme-muted mb-6 leading-relaxed">
+                        Founded on the principles of old-world craftsmanship, The Gilded Razor isn't just a place to get a haircut—it's a ritual. We believe that grooming is an essential part of a gentleman's daily routine, not a chore.
+                    </p>
+                    <p class="text-theme-muted mb-8 leading-relaxed">
+                        Our team of master barbers combines decades of experience with modern techniques to deliver cuts that are sharp, timeless, and tailored specifically to your head shape and lifestyle.
+                    </p>
+                    <div class="flex items-center gap-8">
+                        <div class="scale-in">
+                            <span class="block text-3xl font-serif text-theme-main font-bold">15k+</span>
+                            <span class="text-xs text-theme-muted uppercase tracking-wider">Happy Clients</span>
+                        </div>
+                        <div class="w-px h-12 border-theme"></div>
+                        <div class="scale-in">
+                            <span class="block text-3xl font-serif text-theme-main font-bold">100%</span>
+                            <span class="text-xs text-theme-muted uppercase tracking-wider">Satisfaction</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 bg-theme-main">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in-up">
+                <h3 class="text-theme-primary uppercase tracking-widest text-sm font-bold mb-2">Our Menu</h3>
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-theme-main">Services & Pricing</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="service-card bg-theme-card p-8 border border-theme transition-all duration-300 fade-in-up">
+                    <div class="flex justify-between items-start mb-4">
+                        <h4 class="text-xl font-serif text-theme-main font-bold">The Signature Cut</h4>
+                        <span class="text-theme-primary font-bold text-xl">$55</span>
+                    </div>
+                    <p class="text-theme-muted text-sm mb-6">Consultation, precision cut, hot towel finish, and styling with premium products.</p>
+                    <ul class="text-theme-muted text-sm space-y-2">
+                        <li class="flex items-center"><i class="fas fa-check text-theme-primary mr-2"></i> 45 Minutes</li>
+                        <li class="flex items-center"><i class="fas fa-check text-theme-primary mr-2"></i> Wash & Style</li>
+                    </ul>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="service-card bg-theme-card p-8 border border-theme transition-all duration-300 fade-in-up" style="transition-delay: 100ms;">
+                    <div class="flex justify-between items-start mb-4">
+                        <h4 class="text-xl font-serif text-theme-main font-bold">Beard Sculpting</h4>
+                        <span class="text-theme-primary font-bold text-xl">$35</span>
+                    </div>
+                    <p class="text-theme-muted text-sm mb-6">Beard trim, shape up with straight razor, essential oil treatment, and hot towel.</p>
+                    <ul class="text-theme-muted text-sm space-y-2">
+                        <li class="flex items-center"><i class="fas fa-check text-theme-primary mr-2"></i> 30 Minutes</li>
+                        <li class="flex items-center"><i class="fas fa-check text-theme-primary mr-2"></i> Hot Towel</li>
+                    </ul>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="service-card bg-theme-card p-8 border border-theme transition-all duration-300 fade-in-up" style="transition-delay: 200ms;">
+                    <div class="flex justify-between items-start mb-4">
+                        <h4 class="text-xl font-serif text-theme-main font-bold">Royal Shave</h4>
+                        <span class="text-theme-primary font-bold text-xl">$45</span>
+                    </div>
+                    <p class="text-theme-muted text-sm mb-6">Traditional straight razor shave with pre-shave oil, hot lather, and post-shave balm.</p>
+                    <ul class="text-theme-muted text-sm space-y-2">
+                        <li class="flex items-center"><i class="fas fa-check text-theme-primary mr-2"></i> 45 Minutes</li>
+                        <li class="flex items-center"><i class="fas fa-check text-theme-primary mr-2"></i> Steam Treatment</li>
+                    </ul>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="service-card bg-theme-card p-8 border border-theme transition-all duration-300 fade-in-up">
+                    <div class="flex justify-between items-start mb-4">
+                        <h4 class="text-xl font-serif text-theme-main font-bold">Father & Son</h4>
+                        <span class="text-theme-primary font-bold text-xl">$85</span>
+                    </div>
+                    <p class="text-theme-muted text-sm mb-6">A bonding experience. Includes two signature cuts and a complimentary beverage.</p>
+                    <ul class="text-theme-muted text-sm space-y-2">
+                        <li class="flex items-center"><i class="fas fa-check text-theme-primary mr-2"></i> 60 Minutes</li>
+                        <li class="flex items-center"><i class="fas fa-check text-theme-primary mr-2"></i> 2 Cuts</li>
+                    </ul>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="service-card bg-theme-card p-8 border border-theme transition-all duration-300 fade-in-up" style="transition-delay: 100ms;">
+                    <div class="flex justify-between items-start mb-4">
+                        <h4 class="text-xl font-serif text-theme-main font-bold">The Executive</h4>
+                        <span class="text-theme-primary font-bold text-xl">$95</span>
+                    </div>
+                    <p class="text-theme-muted text-sm mb-6">The full package. Haircut, beard trim, facial scrub, and black mask treatment.</p>
+                    <ul class="text-theme-muted text-sm space-y-2">
+                        <li class="flex items-center"><i class="fas fa-check text-theme-primary mr-2"></i> 90 Minutes</li>
+                        <li class="flex items-center"><i class="fas fa-check text-theme-primary mr-2"></i> Full Service</li>
+                    </ul>
+                </div>
+
+                <!-- Service 6 -->
+                <div class="service-card bg-theme-card p-8 border border-theme transition-all duration-300 fade-in-up" style="transition-delay: 200ms;">
+                    <div class="flex justify-between items-start mb-4">
+                        <h4 class="text-xl font-serif text-theme-main font-bold">Product Bundle</h4>
+                        <span class="text-theme-primary font-bold text-xl">$40+</span>
+                    </div>
+                    <p class="text-theme-muted text-sm mb-6">Take the look home. Premium pomades, beard oils, and styling tools available.</p>
+                    <ul class="text-theme-muted text-sm space-y-2">
+                        <li class="flex items-center"><i class="fas fa-check text-theme-primary mr-2"></i> Retail</li>
+                        <li class="flex items-center"><i class="fas fa-check text-theme-primary mr-2"></i> In-Store Only</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-24 bg-theme-alt">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 fade-in-up">
+                <div>
+                    <h3 class="text-theme-primary uppercase tracking-widest text-sm font-bold mb-2">Our Work</h3>
+                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-theme-main">The Gallery</h2>
+                </div>
+                <a href="#" class="hidden md:inline-block text-theme-main border-b border-theme-primary pb-1 hover-text-theme-primary transition-colors">Follow us on Instagram</a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 h-auto md:h-[600px]">
+                <!-- Image 1 (Tall) -->
+                <div class="md:col-span-1 md:row-span-2 gallery-item fade-in-up">
+                    <img src="https://image.qwenlm.ai/public_source/0a7d5122-f7ba-4c45-bcc1-24b9182b817c/1515ffa13-e7c1-4bdb-88e3-a776f41699d9.png" alt="Fade Cut" class="w-full h-full object-cover">
+                    <div class="gallery-overlay"></div>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                        <span class="text-white font-serif text-xl italic drop-shadow-lg">Precision Fade</span>
+                    </div>
+                </div>
+                
+                <!-- Image 2 (Wide) -->
+                <div class="md:col-span-2 gallery-item fade-in-up" style="transition-delay: 100ms;">
+                    <img src="https://image.qwenlm.ai/public_source/0a7d5122-f7ba-4c45-bcc1-24b9182b817c/1285f1ce3-36bc-47a8-a111-e1164705606d.png" alt="Beard Trim" class="w-full h-full object-cover">
+                    <div class="gallery-overlay"></div>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                        <span class="text-white font-serif text-xl italic drop-shadow-lg">Beard Sculpting</span>
+                    </div>
+                </div>
+
+                <!-- Image 3 (Wide) -->
+                <div class="md:col-span-2 gallery-item fade-in-up" style="transition-delay: 200ms;">
+                    <img src="https://image.qwenlm.ai/public_source/0a7d5122-f7ba-4c45-bcc1-24b9182b817c/1561119f6-9852-42bd-b24e-6247307f0192.png" alt="Tools" class="w-full h-full object-cover">
+                    <div class="gallery-overlay"></div>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                        <span class="text-white font-serif text-xl italic drop-shadow-lg">Premium Tools</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center md:hidden">
+                <a href="#" class="text-theme-main border-b border-theme-primary pb-1 hover-text-theme-primary transition-colors">Follow us on Instagram</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking / Contact Section -->
+    <section id="contact" class="py-24 bg-theme-main relative">
+        <div class="container mx-auto px-6">
+            <div class="bg-theme-card rounded-lg shadow-2xl overflow-hidden flex flex-col lg:flex-row fade-in-up">
+                
+                <!-- Contact Info -->
+                <div class="lg:w-2/5 bg-theme-primary p-12 text-white flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-3xl font-serif font-bold mb-6">Visit Us</h3>
+                        <p class="mb-8 font-medium opacity-90">Walk-ins welcome, but appointments are preferred to ensure you don't wait.</p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <i class="fas fa-map-marker-alt mt-1 mr-4 text-xl"></i>
+                                <div>
+                                    <h5 class="font-bold uppercase text-sm">Location</h5>
+                                    <p class="opacity-90">124 Barber Street,<br>Metropolis, NY 10012</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-phone mt-1 mr-4 text-xl"></i>
+                                <div>
+                                    <h5 class="font-bold uppercase text-sm">Phone</h5>
+                                    <p class="opacity-90">(212) 555-0199</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-envelope mt-1 mr-4 text-xl"></i>
+                                <div>
+                                    <h5 class="font-bold uppercase text-sm">Email</h5>
+                                    <p class="opacity-90">bookings@gildedrazor.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-12">
+                        <h5 class="font-bold uppercase text-sm mb-4">Opening Hours</h5>
+                        <div class="grid grid-cols-2 gap-2 text-sm opacity-90">
+                            <span>Mon - Fri:</span> <span class="font-bold text-right">9am - 8pm</span>
+                            <span>Saturday:</span> <span class="font-bold text-right">10am - 6pm</span>
+                            <span>Sunday:</span> <span class="font-bold text-right">Closed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Booking Form -->
+                <div class="lg:w-3/5 p-12">
+                    <h3 class="text-3xl font-serif font-bold text-theme-main mb-2">Book an Appointment</h3>
+                    <p class="text-theme-muted mb-8">Fill out the form below and we will confirm your slot via email.</p>
+                    
+                    <form id="bookingForm" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs uppercase tracking-widest text-theme-muted mb-2">Name</label>
+                                <input type="text" required class="w-full bg-theme-main border border-theme text-theme-main px-4 py-3 focus:outline-none focus:border-theme-primary transition-colors" placeholder="John Doe">
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase tracking-widest text-theme-muted mb-2">Phone</label>
+                                <input type="tel" required class="w-full bg-theme-main border border-theme text-theme-main px-4 py-3 focus:outline-none focus:border-theme-primary transition-colors" placeholder="(555) 000-0000">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs uppercase tracking-widest text-theme-muted mb-2">Service</label>
+                                <select class="w-full bg-theme-main border border-theme text-theme-main px-4 py-3 focus:outline-none focus:border-theme-primary transition-colors appearance-none">
+                                    <option>Signature Cut</option>
+                                    <option>Beard Sculpting</option>
+                                    <option>Royal Shave</option>
+                                    <option>The Executive</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase tracking-widest text-theme-muted mb-2">Preferred Barber</label>
+                                <select class="w-full bg-theme-main border border-theme text-theme-main px-4 py-3 focus:outline-none focus:border-theme-primary transition-colors appearance-none">
+                                    <option>Any Available</option>
+                                    <option>Master James</option>
+                                    <option>Senior Mike</option>
+                                    <option>Junior Alex</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-theme-muted mb-2">Date & Time</label>
+                            <input type="datetime-local" required class="w-full bg-theme-main border border-theme text-theme-main px-4 py-3 focus:outline-none focus:border-theme-primary transition-colors">
+                        </div>
+
+                        <button type="submit" class="w-full bg-theme-primary text-white font-bold uppercase tracking-widest py-4 hover-bg-theme-primary transition-colors duration-300 btn-animated">
+                            Confirm Booking
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12 border-t border-theme">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0 text-center md:text-left">
+                    <a href="#" class="text-2xl font-serif font-bold tracking-widest text-theme-main">
+                        THE <span class="text-theme-primary">GILDED</span> RAZOR
+                    </a>
+                    <p class="text-theme-muted text-sm mt-2">© 2024 The Gilded Razor. All rights reserved.</p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#" class="text-theme-muted hover-text-theme-primary transition-colors"><i class="fab fa-instagram text-xl"></i></a>
+                    <a href="#" class="text-theme-muted hover-text-theme-primary transition-colors"><i class="fab fa-facebook-f text-xl"></i></a>
+                    <a href="#" class="text-theme-muted hover-text-theme-primary transition-colors"><i class="fab fa-twitter text-xl"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Theme Switcher Functionality
+        function setTheme(themeName) {
+            document.documentElement.setAttribute('data-theme', themeName);
+            document.body.setAttribute('data-theme', themeName);
+            localStorage.setItem('barberTheme', themeName);
+            
+            // Update active button state
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('onclick').includes(themeName)) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Load saved theme on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('barberTheme') || 'classic';
+            setTheme(savedTheme);
+        });
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-scrolled', 'py-4');
+                navbar.classList.remove('py-6', 'border-transparent');
+            } else {
+                navbar.classList.remove('nav-scrolled', 'py-4');
+                navbar.classList.add('py-6', 'border-transparent');
+            }
+        });
+
+        // Scroll Progress Bar
+        const scrollProgress = document.getElementById('scrollProgress');
+        window.addEventListener('scroll', () => {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercentage = (scrollTop / scrollHeight) * 100;
+            scrollProgress.style.width = scrollPercentage + '%';
+        });
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking a link
+        menu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        // Smooth Scroll for Navigation Links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                
+                if (href && href.startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = href.substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        const navbarHeight = navbar.offsetHeight;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - navbarHeight - 20;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Form Submission Simulation
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerText;
+            
+            submitBtn.innerText = 'Processing...';
+            submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+            
+            setTimeout(() => {
+                alert('Thank you! Your appointment request has been received. We will contact you shortly to confirm.');
+                this.reset();
+                submitBtn.innerText = originalText;
+                submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+            }, 1500);
+        });
+
+        // Intersection Observer for Animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right, .scale-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Theme switcher visibility on scroll
+        const themeSwitcher = document.getElementById('themeSwitcher');
+        let lastScrollY = window.scrollY;
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300 && window.scrollY > lastScrollY) {
+                themeSwitcher.style.transform = 'translateX(100px)';
+                themeSwitcher.style.opacity = '0';
+            } else {
+                themeSwitcher.style.transform = 'translateX(0)';
+                themeSwitcher.style.opacity = '1';
+            }
+            lastScrollY = window.scrollY;
+        });
+    </script>
+</body>
+</html>
+
